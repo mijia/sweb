@@ -59,6 +59,13 @@ type Render struct {
 	bufPool   *bpool.BufferPool
 }
 
+func (r *Render) RawJson(w http.ResponseWriter, status int, rawData []byte) error {
+	w.Header().Set("Content-Type", kContentJson+kContentCharset)
+	w.WriteHeader(status)
+	_, err := w.Write(rawData)
+	return err
+}
+
 func (r *Render) Json(w http.ResponseWriter, status int, v interface{}) error {
 	var (
 		data []byte
@@ -76,6 +83,13 @@ func (r *Render) Json(w http.ResponseWriter, status int, v interface{}) error {
 	w.Header().Set("Content-Type", kContentJson+kContentCharset)
 	w.WriteHeader(status)
 	_, err = w.Write(data)
+	return err
+}
+
+func (r *Render) RawHtml(w http.ResponseWriter, status int, rawData []byte) error {
+	w.Header().Set("Content-Type", kContentHtml+kContentCharset)
+	w.WriteHeader(status)
+	_, err := w.Write(rawData)
 	return err
 }
 
